@@ -57,7 +57,7 @@ namespace defer_hpp
             explicit error_defer_impl(
                 UF&& f,
                 std::tuple<Args...>&& args)
-            : defer_impl<F>(std::forward<UF>(f), std::move(args))
+            : defer_impl<F, Args...>(std::forward<UF>(f), std::move(args))
             , exceptions_(std::uncaught_exceptions()) {}
 
             ~error_defer_impl() noexcept final {
@@ -76,7 +76,7 @@ namespace defer_hpp
             explicit return_defer_impl(
                 UF&& f,
                 std::tuple<Args...>&& args)
-            : defer_impl<F>(std::forward<UF>(f), std::move(args))
+            : defer_impl<F, Args...>(std::forward<UF>(f), std::move(args))
             , exceptions_(std::uncaught_exceptions()) {}
 
             ~return_defer_impl() noexcept final {

@@ -46,6 +46,56 @@ target_link_libraries(your_project_target defer.hpp)
 
 ## Examples
 
-TODO
+### Basic Defer
+
+```cpp
+if ( FILE *file = ::fopen("output.txt", "a") ) {
+    // defer will close the file after scope or on exception
+    DEFER([file]{ ::fclose(file); });
+
+    const char buffer[] = "hello world\n";
+    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+        throw std::runtime_error("some exception");
+    }
+}
+```
+
+### Error Defer
+
+```cpp
+if ( FILE *file = ::fopen("output.txt", "a") ) {
+    // defer will close the file after scope or on exception
+    DEFER([file]{ ::fclose(file); });
+
+    // error defer will be called on exception
+    ERROR_DEFER([]{
+        std::cerr << "there is something wrong" << std::endl;
+    });
+
+    const char buffer[] = "hello world\n";
+    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+        throw std::runtime_error("some exception");
+    }
+}
+```
+
+### Return Defer
+
+```cpp
+if ( FILE *file = ::fopen("output.txt", "a") ) {
+    // defer will close the file after scope or on exception
+    DEFER([file]{ ::fclose(file); });
+
+    // return defer will be called on successful scope exit
+    RETURN_DEFER([]{
+        std::cout << "all is ok!" << std::endl;
+    });
+
+    const char buffer[] = "hello world\n";
+    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+        throw std::runtime_error("some exception");
+    }
+}
+```
 
 ## [License (MIT)](./LICENSE.md)
