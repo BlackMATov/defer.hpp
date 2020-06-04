@@ -49,12 +49,12 @@ target_link_libraries(your_project_target defer.hpp)
 ### Basic Defer
 
 ```cpp
-if ( FILE *file = ::fopen("output.txt", "a") ) {
+if ( FILE *file = std::fopen("output.txt", "a") ) {
     // defer will close the file after scope or on exception
-    DEFER([file]{ ::fclose(file); });
+    DEFER([file]{ std::fclose(file); });
 
     const char buffer[] = "hello world\n";
-    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+    if ( 12 != std::fwrite(buffer, sizeof(buffer[0]), std::strlen(buffer), file) ) {
         throw std::runtime_error("some exception");
     }
 }
@@ -63,9 +63,9 @@ if ( FILE *file = ::fopen("output.txt", "a") ) {
 ### Error Defer
 
 ```cpp
-if ( FILE *file = ::fopen("output.txt", "a") ) {
+if ( FILE *file = std::fopen("output.txt", "a") ) {
     // defer will close the file after scope or on exception
-    DEFER([file]{ ::fclose(file); });
+    DEFER([file]{ std::fclose(file); });
 
     // error defer will be called on exception
     ERROR_DEFER([]{
@@ -73,7 +73,7 @@ if ( FILE *file = ::fopen("output.txt", "a") ) {
     });
 
     const char buffer[] = "hello world\n";
-    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+    if ( 12 != std::fwrite(buffer, sizeof(buffer[0]), std::strlen(buffer), file) ) {
         throw std::runtime_error("some exception");
     }
 }
@@ -82,9 +82,9 @@ if ( FILE *file = ::fopen("output.txt", "a") ) {
 ### Return Defer
 
 ```cpp
-if ( FILE *file = ::fopen("output.txt", "a") ) {
+if ( FILE *file = std::fopen("output.txt", "a") ) {
     // defer will close the file after scope or on exception
-    DEFER([file]{ ::fclose(file); });
+    DEFER([file]{ std::fclose(file); });
 
     // return defer will be called on successful scope exit
     RETURN_DEFER([]{
@@ -92,7 +92,7 @@ if ( FILE *file = ::fopen("output.txt", "a") ) {
     });
 
     const char buffer[] = "hello world\n";
-    if ( 12 != ::fwrite(buffer, sizeof(buffer[0]), ::strlen(buffer), file) ) {
+    if ( 12 != std::fwrite(buffer, sizeof(buffer[0]), std::strlen(buffer), file) ) {
         throw std::runtime_error("some exception");
     }
 }
