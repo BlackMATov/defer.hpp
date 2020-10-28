@@ -17,7 +17,7 @@ TEST_CASE("examples") {
     SECTION("basic_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
-            DEFER([file]{ std::fclose(file); });
+            DEFER_HPP([file]{ std::fclose(file); });
 
             const char buffer[] = "hello world\n";
             if ( 12 != std::fwrite(buffer, sizeof(buffer[0]), std::strlen(buffer), file) ) {
@@ -29,10 +29,10 @@ TEST_CASE("examples") {
     SECTION("error_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
-            DEFER([file]{ std::fclose(file); });
+            DEFER_HPP([file]{ std::fclose(file); });
 
             // error defer will be called on exception
-            ERROR_DEFER([]{
+            ERROR_DEFER_HPP([]{
                 std::cerr << "there is something wrong" << std::endl;
             });
 
@@ -46,10 +46,10 @@ TEST_CASE("examples") {
     SECTION("return_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
-            DEFER([file]{ std::fclose(file); });
+            DEFER_HPP([file]{ std::fclose(file); });
 
             // return defer will be called on successful scope exit
-            RETURN_DEFER([]{
+            RETURN_DEFER_HPP([]{
                 std::cout << "all is ok!" << std::endl;
             });
 

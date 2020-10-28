@@ -120,31 +120,31 @@ namespace defer_hpp
     }
 }
 
-#define DEFER_IMPL_PP_CAT(x, y) DEFER_IMPL_PP_CAT_I(x, y)
-#define DEFER_IMPL_PP_CAT_I(x, y) x ## y
+#define DEFER_HPP_IMPL_PP_CAT(x, y) DEFER_HPP_IMPL_PP_CAT_I(x, y)
+#define DEFER_HPP_IMPL_PP_CAT_I(x, y) x ## y
 
 #ifdef __COUNTER__
-    #define DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_defer_, __COUNTER__) =\
+    #define DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_defer_, __COUNTER__) =\
             ::defer_hpp::make_defer(__VA_ARGS__)
 
-    #define ERROR_DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_error_defer_, __COUNTER__) =\
+    #define ERROR_DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_error_defer_, __COUNTER__) =\
             ::defer_hpp::make_error_defer(__VA_ARGS__)
 
-    #define RETURN_DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_return_defer_, __COUNTER__) =\
+    #define RETURN_DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_return_defer_, __COUNTER__) =\
             ::defer_hpp::make_return_defer(__VA_ARGS__)
 #else
-    #define DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_defer_, __LINE__) =\
+    #define DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_defer_, __LINE__) =\
             ::defer_hpp::make_defer(__VA_ARGS__)
 
-    #define ERROR_DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_error_defer_, __LINE__) =\
+    #define ERROR_DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_error_defer_, __LINE__) =\
             ::defer_hpp::make_error_defer(__VA_ARGS__)
 
-    #define RETURN_DEFER(...)\
-        auto DEFER_IMPL_PP_CAT(generated_return_defer_, __LINE__) =\
+    #define RETURN_DEFER_HPP(...)\
+        auto DEFER_HPP_IMPL_PP_CAT(generated_return_defer_, __LINE__) =\
             ::defer_hpp::make_return_defer(__VA_ARGS__)
 #endif
