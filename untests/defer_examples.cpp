@@ -4,17 +4,15 @@
  * Copyright (C) 2020, by Matvey Cherevko (blackmatov@gmail.com)
  ******************************************************************************/
 
-#define CATCH_CONFIG_FAST_COMPILE
-#include <catch2/catch.hpp>
+#include <defer.hpp/defer.hpp>
+#include "doctest/doctest.hpp"
 
 #include <cstdio>
 #include <cstring>
 #include <iostream>
 
-#include <defer.hpp/defer.hpp>
-
 TEST_CASE("examples") {
-    SECTION("basic_defer") {
+    SUBCASE("basic_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
             DEFER_HPP([file]{ std::fclose(file); });
@@ -26,7 +24,7 @@ TEST_CASE("examples") {
         }
     }
 
-    SECTION("error_defer") {
+    SUBCASE("error_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
             DEFER_HPP([file]{ std::fclose(file); });
@@ -43,7 +41,7 @@ TEST_CASE("examples") {
         }
     }
 
-    SECTION("return_defer") {
+    SUBCASE("return_defer") {
         if ( FILE *file = std::fopen("output.txt", "a") ) {
             // defer will close the file after scope or on exception
             DEFER_HPP([file]{ std::fclose(file); });

@@ -4,17 +4,13 @@
  * Copyright (C) 2020, by Matvey Cherevko (blackmatov@gmail.com)
  ******************************************************************************/
 
-#define CATCH_CONFIG_FAST_COMPILE
-#include <catch2/catch.hpp>
-
 #include <defer.hpp/defer.hpp>
+#include "doctest/doctest.hpp"
 
-namespace
-{
-}
+#include <functional>
 
 TEST_CASE("defer") {
-    SECTION("simple") {
+    SUBCASE("simple") {
         int i = 0;
         {
             DEFER_HPP([&i]{ ++i; });
@@ -23,7 +19,7 @@ TEST_CASE("defer") {
         REQUIRE(i == 1);
     }
 
-    SECTION("simple_with_arg") {
+    SUBCASE("simple_with_arg") {
         int i = 0;
         {
             DEFER_HPP([](int& i){ ++i; }, std::ref(i));
@@ -32,7 +28,7 @@ TEST_CASE("defer") {
         REQUIRE(i == 1);
     }
 
-    SECTION("simple_with_args") {
+    SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
             DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
@@ -43,7 +39,7 @@ TEST_CASE("defer") {
         REQUIRE(j == 2);
     }
 
-    SECTION("simple_with_exception") {
+    SUBCASE("simple_with_exception") {
         int i = 0;
         try {
             DEFER_HPP([&i]{ ++i; });
@@ -56,7 +52,7 @@ TEST_CASE("defer") {
 }
 
 TEST_CASE("error_defer") {
-    SECTION("simple") {
+    SUBCASE("simple") {
         int i = 0;
         {
             ERROR_DEFER_HPP([&i]{ ++i; });
@@ -65,7 +61,7 @@ TEST_CASE("error_defer") {
         REQUIRE(i == 0);
     }
 
-    SECTION("simple_with_arg") {
+    SUBCASE("simple_with_arg") {
         int i = 0;
         {
             ERROR_DEFER_HPP([](int& i){ ++i; }, std::ref(i));
@@ -74,7 +70,7 @@ TEST_CASE("error_defer") {
         REQUIRE(i == 0);
     }
 
-    SECTION("simple_with_args") {
+    SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
             ERROR_DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
@@ -85,7 +81,7 @@ TEST_CASE("error_defer") {
         REQUIRE(j == 0);
     }
 
-    SECTION("simple_with_exception") {
+    SUBCASE("simple_with_exception") {
         int i = 0;
         try {
             ERROR_DEFER_HPP([&i]{ ++i; });
@@ -98,7 +94,7 @@ TEST_CASE("error_defer") {
 }
 
 TEST_CASE("return_defer") {
-    SECTION("simple") {
+    SUBCASE("simple") {
         int i = 0;
         {
             RETURN_DEFER_HPP([&i]{ ++i; });
@@ -107,7 +103,7 @@ TEST_CASE("return_defer") {
         REQUIRE(i == 1);
     }
 
-    SECTION("simple_with_arg") {
+    SUBCASE("simple_with_arg") {
         int i = 0;
         {
             RETURN_DEFER_HPP([](int& i){ ++i; }, std::ref(i));
@@ -116,7 +112,7 @@ TEST_CASE("return_defer") {
         REQUIRE(i == 1);
     }
 
-    SECTION("simple_with_args") {
+    SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
             RETURN_DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
@@ -127,7 +123,7 @@ TEST_CASE("return_defer") {
         REQUIRE(j == 2);
     }
 
-    SECTION("simple_with_exception") {
+    SUBCASE("simple_with_exception") {
         int i = 0;
         try {
             RETURN_DEFER_HPP([&i]{ ++i; });
