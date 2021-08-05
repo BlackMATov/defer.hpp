@@ -23,9 +23,17 @@ target_link_libraries(${PROJECT_NAME} defer.hpp)
 target_compile_options(${PROJECT_NAME}
     PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:
-        /W4>
+        /WX /W4>
     PRIVATE
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
-        -Wall -Wextra -Wpedantic>)
+    $<$<CXX_COMPILER_ID:GNU>:
+        -Werror -Wall -Wextra -Wpedantic>
+    PRIVATE
+    $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:
+        -Werror -Weverything -Wconversion>)
+
+target_compile_definitions(${PROJECT_NAME}
+    PRIVATE
+    $<$<CXX_COMPILER_ID:MSVC>:
+        -D_CRT_SECURE_NO_WARNINGS>)
 
 add_test(${PROJECT_NAME} ${PROJECT_NAME})
