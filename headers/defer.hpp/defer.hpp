@@ -15,18 +15,15 @@ namespace defer_hpp
 {
     namespace impl
     {
-        class noncopyable {
-        public:
-            noncopyable(const noncopyable&) = delete;
-            noncopyable& operator=(const noncopyable&) = delete;
-        protected:
-            noncopyable() = default;
-            ~noncopyable() = default;
-        };
-
         template < typename F, typename... Args >
-        class defer_impl : noncopyable {
+        class defer_impl {
         public:
+            defer_impl() = delete;
+            defer_impl(defer_impl&&) = delete;
+            defer_impl(const defer_impl&) = delete;
+            defer_impl& operator=(defer_impl&&) = delete;
+            defer_impl& operator=(const defer_impl&) = delete;
+
             template < typename UF >
             explicit defer_impl(
                 UF&& f,
@@ -43,6 +40,7 @@ namespace defer_hpp
             void dismiss() noexcept {
                 dismissed_ = true;
             }
+
         private:
             F f_;
             std::tuple<Args...> args_;
@@ -52,6 +50,12 @@ namespace defer_hpp
         template < typename F, typename... Args >
         class error_defer_impl final : public defer_impl<F, Args...> {
         public:
+            error_defer_impl() = delete;
+            error_defer_impl(error_defer_impl&&) = delete;
+            error_defer_impl(const error_defer_impl&) = delete;
+            error_defer_impl& operator=(error_defer_impl&&) = delete;
+            error_defer_impl& operator=(const error_defer_impl&) = delete;
+
             template < typename UF >
             explicit error_defer_impl(
                 UF&& f,
@@ -64,6 +68,7 @@ namespace defer_hpp
                     this->dismiss();
                 }
             }
+
         private:
             int exceptions_{};
         };
@@ -71,6 +76,12 @@ namespace defer_hpp
         template < typename F, typename... Args >
         class return_defer_impl final : public defer_impl<F, Args...> {
         public:
+            return_defer_impl() = delete;
+            return_defer_impl(return_defer_impl&&) = delete;
+            return_defer_impl(const return_defer_impl&) = delete;
+            return_defer_impl& operator=(return_defer_impl&&) = delete;
+            return_defer_impl& operator=(const return_defer_impl&) = delete;
+
             template < typename UF >
             explicit return_defer_impl(
                 UF&& f,
@@ -83,6 +94,7 @@ namespace defer_hpp
                     this->dismiss();
                 }
             }
+
         private:
             int exceptions_{};
         };

@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 #include <defer.hpp/defer.hpp>
-#include "doctest/doctest.hpp"
+#include <doctest/doctest.h>
 
 #include <functional>
 
@@ -22,7 +22,7 @@ TEST_CASE("defer") {
     SUBCASE("simple_with_arg") {
         int i = 0;
         {
-            DEFER_HPP([](int& i){ ++i; }, std::ref(i));
+            DEFER_HPP([](int& ni){ ++ni; }, std::ref(i));
             REQUIRE(i == 0);
         }
         REQUIRE(i == 1);
@@ -31,7 +31,7 @@ TEST_CASE("defer") {
     SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
-            DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
+            DEFER_HPP([](int& ni, int& nj){ ++ni; nj += 2; }, std::ref(i), std::ref(j));
             REQUIRE(i == 0);
             REQUIRE(j == 0);
         }
@@ -64,7 +64,7 @@ TEST_CASE("error_defer") {
     SUBCASE("simple_with_arg") {
         int i = 0;
         {
-            ERROR_DEFER_HPP([](int& i){ ++i; }, std::ref(i));
+            ERROR_DEFER_HPP([](int& ni){ ++ni; }, std::ref(i));
             REQUIRE(i == 0);
         }
         REQUIRE(i == 0);
@@ -73,7 +73,7 @@ TEST_CASE("error_defer") {
     SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
-            ERROR_DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
+            ERROR_DEFER_HPP([](int& ni, int& nj){ ++ni; nj += 2; }, std::ref(i), std::ref(j));
             REQUIRE(i == 0);
             REQUIRE(j == 0);
         }
@@ -106,7 +106,7 @@ TEST_CASE("return_defer") {
     SUBCASE("simple_with_arg") {
         int i = 0;
         {
-            RETURN_DEFER_HPP([](int& i){ ++i; }, std::ref(i));
+            RETURN_DEFER_HPP([](int& ni){ ++ni; }, std::ref(i));
             REQUIRE(i == 0);
         }
         REQUIRE(i == 1);
@@ -115,7 +115,7 @@ TEST_CASE("return_defer") {
     SUBCASE("simple_with_args") {
         int i = 0, j = 0;
         {
-            RETURN_DEFER_HPP([](int& i, int& j){ ++i; j += 2; }, std::ref(i), std::ref(j));
+            RETURN_DEFER_HPP([](int& ni, int& nj){ ++ni; nj += 2; }, std::ref(i), std::ref(j));
             REQUIRE(i == 0);
             REQUIRE(j == 0);
         }

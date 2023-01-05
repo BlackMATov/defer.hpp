@@ -5,7 +5,7 @@
  ******************************************************************************/
 
 #include <defer.hpp/defer.hpp>
-#include "doctest/doctest.hpp"
+#include <doctest/doctest.h>
 
 #include <cstdio>
 #include <cstring>
