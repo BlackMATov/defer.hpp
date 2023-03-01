@@ -1,0 +1,29 @@
+Diagnostics:
+  ClangTidy:
+    Add:
+      - bugprone-*
+      - clang-analyzer-*
+      - concurrency-*
+      - cppcoreguidelines-*
+      - misc-*
+      - modernize-*
+      - performance-*
+      - portability-*
+      - readability-*
+    Remove:
+      - bugprone-easily-swappable-parameters
+      - bugprone-macro-parentheses
+      - cppcoreguidelines-macro-usage
+      - cppcoreguidelines-non-private-member-variables-in-classes
+      - misc-no-recursion
+      - misc-non-private-member-variables-in-classes
+      - misc-unused-using-decls
+      - modernize-use-trailing-return-type
+      - readability-identifier-length
+      - readability-named-parameter
+      - readability-redundant-access-specifiers
+      - readability-simplify-boolean-expr
+      - readability-use-anyofallof
+
+CompileFlags:
+  CompilationDatabase: ../.cdb
